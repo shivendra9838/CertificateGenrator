@@ -7,6 +7,8 @@ services:
     startCommand: npm run start --workspace=backend
     healthCheckPath: /health
     envVars:
+      - key: NODE_VERSION
+        value: 20.12.2
       - key: NODE_ENV
         value: production
       - key: MONGODB_URI
