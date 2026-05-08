@@ -3,7 +3,7 @@ WORKDIR /app
 
 COPY package*.json ./
 COPY frontend/package*.json ./frontend/
-RUN npm ci --workspace=frontend
+RUN npm install --workspace=frontend
 
 COPY frontend ./frontend
 RUN npm run build --workspace=frontend

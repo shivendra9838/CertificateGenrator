@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: certificate-generator-api
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build --workspace=backend
+    startCommand: npm run start --workspace=backend
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: MONGODB_DB_NAME
+        value: certificate_generator
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CERTIFICATE_SECRET_KEY
+        generateValue: true
+      - key: CERTIFICATE_STORAGE_PATH
+        value: ./certificates
+      - key: CORS_ORIGIN
+        sync: false
+      - key: LOG_LEVEL
+        value: info
+      - key: LOG_FILE_PATH
+        value: ./logs/app.log

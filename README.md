@@ -130,6 +130,55 @@ The backend logger writes structured JSON lines to `LOG_FILE_PATH` and mirrors m
 
 ## Deployment
 
+### Render Backend
+
+Use the checked-in `render.yaml` Blueprint or create a Web Service from GitHub:
+
+- Repository: `shivendra9838/CertificateGenrator`
+- Runtime: Node
+- Build command: `npm install && npm run build --workspace=backend`
+- Start command: `npm run start --workspace=backend`
+- Health check path: `/health`
+
+Set these Render environment variables:
+
+| Variable                   | Value                                        |
+| -------------------------- | -------------------------------------------- |
+| `NODE_ENV`                 | `production`                                 |
+| `MONGODB_URI`              | your MongoDB Atlas connection string         |
+| `MONGODB_DB_NAME`          | `certificate_generator`                      |
+| `JWT_SECRET`               | a long random secret                         |
+| `CERTIFICATE_SECRET_KEY`   | a long random secret                         |
+| `CERTIFICATE_STORAGE_PATH` | `./certificates`                             |
+| `CORS_ORIGIN`              | your Vercel frontend URL                     |
+| `LOG_LEVEL`                | `info`                                       |
+| `LOG_FILE_PATH`            | `./logs/app.log`                             |
+
+After deploy, the API base URL will look like:
+
+```text
+https://certificate-generator-api.onrender.com/api
+```
+
+### Vercel Frontend
+
+Use the checked-in `vercel.json` or import the GitHub repo into Vercel:
+
+- Framework preset: Vite
+- Build command: `npm run build --workspace=frontend`
+- Output directory: `frontend/dist`
+- Install command: `npm install`
+
+Set this Vercel environment variable:
+
+| Variable            | Value                                  |
+| ------------------- | -------------------------------------- |
+| `VITE_API_BASE_URL` | `https://your-render-app.onrender.com/api` |
+
+After Vercel gives you the frontend URL, update Render `CORS_ORIGIN` to that exact URL and redeploy the backend.
+
+### Docker
+
 Build local containers:
 
 ```bash
