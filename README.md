@@ -136,7 +136,7 @@ Use the checked-in `render.yaml` Blueprint or create a Web Service from GitHub:
 
 - Repository: `shivendra9838/CertificateGenrator`
 - Runtime: Node
-- Build command: `npm install && npm run build --workspace=backend`
+- Build command: `npm install --include=dev && npm run build --workspace=backend`
 - Start command: `npm run start --workspace=backend`
 - Health check path: `/health`
 
