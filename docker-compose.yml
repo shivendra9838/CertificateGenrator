@@ -1,0 +1,43 @@
+services:
+  mongodb:
+    image: mongo:7
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    depends_on:
+      - mongodb
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      MONGODB_URI: mongodb://mongodb:27017/certificate_generator
+      MONGODB_DB_NAME: certificate_generator
+      CERTIFICATE_STORAGE_PATH: /app/backend/certificates
+      CORS_ORIGIN: http://localhost:5173
+      LOG_LEVEL: info
+      LOG_FILE_PATH: /app/backend/logs/app.log
+    ports:
+      - "3000:3000"
+    volumes:
+      - certificate-files:/app/backend/certificates
+      - backend-logs:/app/backend/logs
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    depends_on:
+      - backend
+    ports:
+      - "5173:80"
+
+volumes:
+  mongo-data:
+  certificate-files:
+  backend-logs:
