@@ -150,7 +150,7 @@ Set these Render environment variables:
 | `JWT_SECRET`               | a long random secret                         |
 | `CERTIFICATE_SECRET_KEY`   | a long random secret                         |
 | `CERTIFICATE_STORAGE_PATH` | `./certificates`                             |
-| `CORS_ORIGIN`              | your Vercel frontend URL                     |
+| `CORS_ORIGIN`              | your Netlify frontend URL                    |
 | `LOG_LEVEL`                | `info`                                       |
 | `LOG_FILE_PATH`            | `./logs/app.log`                             |
 
@@ -160,22 +160,21 @@ After deploy, the API base URL will look like:
 https://certificate-generator-api.onrender.com/api
 ```
 
-### Vercel Frontend
+### Netlify Frontend
 
-Use the checked-in `vercel.json` or import the GitHub repo into Vercel:
+Use the checked-in `netlify.toml` or import the GitHub repo into Netlify:
 
-- Framework preset: Vite
 - Build command: `npm run build --workspace=frontend`
 - Output directory: `frontend/dist`
 - Install command: `npm install`
 
-Set this Vercel environment variable:
+Set this Netlify environment variable:
 
 | Variable            | Value                                  |
 | ------------------- | -------------------------------------- |
 | `VITE_API_BASE_URL` | `https://your-render-app.onrender.com/api` |
 
-After Vercel gives you the frontend URL, update Render `CORS_ORIGIN` to that exact URL and redeploy the backend.
+After Netlify gives you the frontend URL, update Render `CORS_ORIGIN` to that exact URL and redeploy the backend.
 
 ### Docker
 
